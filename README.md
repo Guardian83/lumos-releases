@@ -2,9 +2,9 @@
 
 This repository contains signed test previews, approved app downloads and update information. Application source code is kept in a separate private repository.
 
-The signed [Android local test preview build 1022](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1022) is available for manual download. It works without a backend or SMS service: enter a valid Iranian phone number and use test code **12345** to open a sample home with simulated devices.
+The signed [Android local test preview build 1022](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1022) is available through the Android update prompt and manual download. It works without a backend or SMS service: enter a valid Iranian phone number and use test code **12345** to open a sample home with simulated devices.
 
-No production update has been approved yet. Local test previews have no `update.json` and are excluded from the production update feed.
+The owner approved offering offline test build 1022 to Android build 1019. Restart build 1019 while connected to the internet to receive the update prompt, then download the APK and confirm installation in Android. This remains an offline test version.
 
 
 ## Android preview
@@ -32,9 +32,9 @@ The first version with update checking must be installed manually. After that, t
 - The owner must approve a specific successful build before publication.
 - Approval publishes the tested binaries, without rebuilding them.
 - iPhone-only releases do not include an Android APK.
-- Each production release includes `update.json` and `SHA256SUMS`. Manual previews include checksums but do not change the update feed.
+- Approved updates include `update.json` and `SHA256SUMS`. The owner explicitly approved build 1022 for the Android update feed.
 
-Update feed (available after the first approved release):
+Active Android update feed:
 `https://github.com/Guardian83/lumos-releases/releases/latest/download/update.json`
 
 Lumos is currently a development preview; device controls are simulated.
