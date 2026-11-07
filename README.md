@@ -1,17 +1,19 @@
-# Lumos — approved downloads
+# Lumos — app downloads
 
-This repository contains approved Lumos app downloads and update information only. Application source code is kept in a separate private repository.
+This repository contains signed test previews, approved app downloads and update information. Application source code is kept in a separate private repository.
 
-A permanently signed [Android preview build 1019](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1019) is available for manual download. Its backend is not configured, so backend login and remote device features are unavailable on physical phones.
+The signed [Android local test preview build 1022](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1022) is available for manual download. It works without a backend or SMS service: enter a valid Iranian phone number and use test code **12345** to open a sample home with simulated devices.
 
-No production update has been approved yet. This preview has no `update.json` and is excluded from the automatic update feed.
+No production update has been approved yet. Local test previews have no `update.json` and are excluded from the production update feed.
 
 
 ## Android preview
 
-[Download the signed Android APK](https://github.com/Guardian83/lumos-releases/releases/download/android-preview-1019/lumos-android-build-1019.apk). The preview includes checksums, public signing-certificate information and source-build provenance. No private key or signing password is published.
+Signup fixes: fixed phone/OTP labels, a clear white back arrow, keyboard-safe navigation, and an explicitly labeled offline test login. No SMS is sent; use **12345**. Test accounts/settings are isolated from real backend data.
 
-This APK establishes the permanent signing identity used for future Android releases. An existing installation signed with a different/debug key cannot be updated in place by this APK. Preserve/export data before any manual migration; do not remove an installed app simply to force an update.
+[Download the signed Android APK](https://github.com/Guardian83/lumos-releases/releases/download/android-preview-1022/lumos-android-build-1022.apk). The preview includes checksums, public signing-certificate information and source-build provenance. No private key or signing password is published.
+
+Build 1022 uses the same permanent signing key as signed preview 1019, so it can be installed over that preview without uninstalling. An existing installation signed with a different/debug key cannot be updated in place by this APK. Preserve/export data before any manual migration; do not remove an installed app simply to force an update.
 
 ## iPhone installation with iLoader
 
@@ -30,7 +32,7 @@ The first version with update checking must be installed manually. After that, t
 - The owner must approve a specific successful build before publication.
 - Approval publishes the tested binaries, without rebuilding them.
 - iPhone-only releases do not include an Android APK.
-- Each release includes `update.json` and `SHA256SUMS`.
+- Each production release includes `update.json` and `SHA256SUMS`. Manual previews include checksums but do not change the update feed.
 
 Update feed (available after the first approved release):
 `https://github.com/Guardian83/lumos-releases/releases/latest/download/update.json`
