@@ -2,7 +2,16 @@
 
 This repository contains approved Lumos app downloads and update information only. Application source code is kept in a separate private repository.
 
-No app version has been approved for public release yet. Files will appear under [Releases](https://github.com/Guardian83/lumos-releases/releases) after the owner tests and approves a build.
+A permanently signed [Android preview build 1019](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1019) is available for manual download. Its backend is not configured, so backend login and remote device features are unavailable on physical phones.
+
+No production update has been approved yet. This preview has no `update.json` and is excluded from the automatic update feed.
+
+
+## Android preview
+
+[Download the signed Android APK](https://github.com/Guardian83/lumos-releases/releases/download/android-preview-1019/lumos-android-build-1019.apk). The preview includes checksums, public signing-certificate information and source-build provenance. No private key or signing password is published.
+
+This APK establishes the permanent signing identity used for future Android releases. An existing installation signed with a different/debug key cannot be updated in place by this APK. Preserve/export data before any manual migration; do not remove an installed app simply to force an update.
 
 ## iPhone installation with iLoader
 
