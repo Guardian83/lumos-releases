@@ -1,0 +1,69 @@
+name: Upload verified APK
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_url:
+        description: 'Short-lived URL of the owner-approved Actions artifact'
+        required: true
+      archive_sha256:
+        description: 'Actions artifact SHA256'
+        required: true
+      apk_sha256:
+        description: 'Verified APK SHA256'
+        required: true
+      build:
+        description: 'Approved build number'
+        required: true
+permissions:
+  contents: write
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Download and verify exact APK
+        env:
+          ARTIFACT_URL: ${{ inputs.artifact_url }}
+          ARCHIVE_SHA256: ${{ inputs.archive_sha256 }}
+          APK_SHA256: ${{ inputs.apk_sha256 }}
+          BUILD_NUMBER: ${{ inputs.build }}
+        run: |
+          python3 - <<'PY'
+          import hashlib,io,os,re,urllib.parse,urllib.request,zipfile
+          from pathlib import Path
+          url=os.environ['ARTIFACT_URL']
+          host=urllib.parse.urlsplit(url).hostname or ''
+          assert urllib.parse.urlsplit(url).scheme=='https'
+          assert host.endswith(('.blob.core.windows.net','.githubusercontent.com','.actions.githubusercontent.com'))
+          assert '\n' not in url and '\r' not in url
+          print('::add-mask::'+url)
+          number=os.environ['BUILD_NUMBER']
+          assert re.fullmatch(r'[0-9]+',number)
+          for key in ['ARCHIVE_SHA256','APK_SHA256']:assert re.fullmatch(r'[0-9a-f]{64}',os.environ[key])
+          with urllib.request.urlopen(url,timeout=180) as response:data=response.read(80*1024*1024+1)
+          assert len(data)<=80*1024*1024
+          assert hashlib.sha256(data).hexdigest()==os.environ['ARCHIVE_SHA256']
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              matches=[entry for entry in archive.infolist() if entry.filename=='app-release.apk']
+              assert len(matches)==1 and matches[0].file_size<=100*1024*1024
+              apk=archive.read(matches[0])
+          assert hashlib.sha256(apk).hexdigest()==os.environ['APK_SHA256']
+          path=Path(os.environ['RUNNER_TEMP'])/f'lumos-android-build-{number}.apk'
+          path.write_bytes(apk)
+          print('Artifact and APK checksums verified.')
+          PY
+      - name: Attach APK to existing draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_NUMBER: ${{ inputs.build }}
+        run: |
+          python3 - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          number=os.environ['BUILD_NUMBER'];repo=os.environ['GITHUB_REPOSITORY'];tag='mobile-preview-'+number
+          release=json.loads(subprocess.check_output(['gh','release','view',tag,'--repo',repo,'--json','isDraft']))
+          assert release['isDraft'],'Only unpublished drafts may be modified'
+          path=Path(os.environ['RUNNER_TEMP'])/f'lumos-android-build-{number}.apk'
+          subprocess.run(['gh','release','upload',tag,'--repo',repo,str(path),'--clobber'],check=True)
+          print('Verified APK attached. Publication remains a separate owner-approved step.')
+          PY
