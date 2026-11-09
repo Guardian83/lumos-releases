@@ -1,51 +1,27 @@
-# Lumos — app downloads
+# Lumos — Android and iPhone downloads
 
-This repository contains signed test previews, approved app downloads and update information. Application source code is kept in a separate private repository.
+Current owner-approved offline test update: **build 1034**. This version removes the test-version title from the authentication footer and top banner.
 
-The signed [Android local test preview build 1027](https://github.com/Guardian83/lumos-releases/releases/tag/android-preview-1027) is available through the Android update prompt and manual download. It works without a backend or SMS service: enter a valid Iranian phone number and use test code **12345** to open a sample home with simulated devices.
+- [Download the signed Android APK](https://github.com/Guardian83/lumos-releases/releases/download/mobile-preview-1034/lumos-android-build-1034.apk)
+- [Download the unsigned iPhone IPA for iLoader](https://github.com/Guardian83/lumos-releases/releases/download/mobile-preview-1034/lumos-iphone-build-1034-unsigned.ipa)
+- [Release notes and checksums](https://github.com/Guardian83/lumos-releases/releases/tag/mobile-preview-1034)
 
-The owner approved offering offline test build 1027 to Android build 1019. Restart build 1019 while connected to the internet to receive the update prompt, then download the APK and confirm installation in Android. This remains an offline test version.
+## Update an installed app
 
+Restart Lumos with internet connected to receive the update prompt. The active update feed now includes both platforms.
 
-## Android preview
+**Android:** current versions download inside Lumos with percentage progress, cancellation and retry. Android asks you to confirm installation. The permanent signing key is the same as builds 1019, 1022 and 1027. Install over the existing signed app; do not uninstall it. Builds signed with a different/debug key require a separate migration.
 
-Build 1027 adds in-app APK download progress, cancellation and retry. Upgrade from 1019/1022 once through the current browser flow; subsequent updates download inside Lumos. Android still requires installation confirmation.
+**iPhone:** download the IPA to your computer and import it in [iLoader](https://github.com/nab138/iloader). iLoader handles signing with your Apple ID. Use the same Apple ID and app identity/settings as your existing Lumos installation, and install over it. The IPA is unsigned; the app cannot silently replace an iLoader-installed iPhone app. Bundle identity: `ir.minisaeb.smartHome`; minimum iOS: 15.0.
 
+## Offline test login
 
-Signup fixes: fixed phone/OTP labels, a clear white back arrow, keyboard-safe navigation, and an explicitly labeled offline test login. No SMS is sent; use **12345**. Test accounts/settings are isolated from real backend data.
-
-[Download the signed Android APK](https://github.com/Guardian83/lumos-releases/releases/download/android-preview-1027/lumos-android-build-1027.apk). The preview includes checksums, public signing-certificate information and source-build provenance. No private key or signing password is published.
-
-Build 1027 uses the same permanent signing key as signed preview 1019, so it can be installed over that preview without uninstalling. An existing installation signed with a different/debug key cannot be updated in place by this APK. Preserve/export data before any manual migration; do not remove an installed app simply to force an update.
-
-## iPhone offline test preview
-
-[iPhone build 1030 for iLoader](https://github.com/Guardian83/lumos-releases/releases/download/ios-preview-1030/lumos-iphone-build-1030-unsigned.ipa) is available for iOS 13 or newer. It uses the same offline test environment as Android: enter a valid Iranian phone number, then code **12345**. No backend or SMS is required; a sample home with five simulated devices opens.
-
-Download the IPA to your computer and import it in iLoader. This IPA is unsigned; iLoader handles signing with your Apple ID. To update an existing Lumos installation, use the same Apple ID and app identity/settings and install over it. Bundle identity: `ir.minisaeb.smartHome`.
-
-[Release notes and checksums](https://github.com/Guardian83/lumos-releases/releases/tag/ios-preview-1030). This iPhone preview is a separate manual download; the Android update feed still offers build 1027.
-
-## iPhone installation with iLoader
-
-1. Download `smart_home_unsigned.ipa` from an approved release to your computer.
-2. Connect your iPhone and open [iLoader](https://github.com/nab138/iloader).
-3. Sign in with the same Apple ID and use the same app identity/options used for your existing Lumos installation.
-4. Install the new IPA over the existing app. Do not delete the old app to update it; Lumos data is stored locally.
-
-The IPA is unsigned. iLoader handles signing and installation. Lumos can notify you about an approved version, but cannot silently replace an iLoader-installed iPhone app.
-
-The first version with update checking must be installed manually. After that, the app checks this repository for approved releases.
+Enter a valid Iranian phone number, such as **09120000000**, and use code **12345**. No backend or SMS is needed. A sample home with five simulated devices opens. Test data is local and isolated from real backend data; device controls are simulated.
 
 ## Release policy
 
-- New source-code pushes build private test candidates only.
-- The owner must approve a specific successful build before publication.
-- Approval publishes the tested binaries, without rebuilding them.
-- iPhone-only releases do not include an Android APK.
-- Approved updates include `update.json` and `SHA256SUMS`. The owner explicitly approved build 1027 for the Android update feed.
+Source code is kept in a separate private repository. Source pushes build private candidates. The owner approves a particular tested build for publication; the exact tested binaries are published without rebuilding. This preview was explicitly approved for both Android and iPhone update delivery.
 
-Active Android update feed:
-`https://github.com/Guardian83/lumos-releases/releases/latest/download/update.json`
+Each update includes `update.json`, `SHA256SUMS` and build provenance. Android releases include the public signing certificate. Private keys and signing passwords are never published.
 
-Lumos is currently a development preview; device controls are simulated.
+Active update feed: `https://github.com/Guardian83/lumos-releases/releases/latest/download/update.json`.
