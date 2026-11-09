@@ -18,6 +18,14 @@ Signup fixes: fixed phone/OTP labels, a clear white back arrow, keyboard-safe na
 
 Build 1027 uses the same permanent signing key as signed preview 1019, so it can be installed over that preview without uninstalling. An existing installation signed with a different/debug key cannot be updated in place by this APK. Preserve/export data before any manual migration; do not remove an installed app simply to force an update.
 
+## iPhone offline test preview
+
+[iPhone build 1030 for iLoader](https://github.com/Guardian83/lumos-releases/releases/download/ios-preview-1030/lumos-iphone-build-1030-unsigned.ipa) is available for iOS 13 or newer. It uses the same offline test environment as Android: enter a valid Iranian phone number, then code **12345**. No backend or SMS is required; a sample home with five simulated devices opens.
+
+Download the IPA to your computer and import it in iLoader. This IPA is unsigned; iLoader handles signing with your Apple ID. To update an existing Lumos installation, use the same Apple ID and app identity/settings and install over it. Bundle identity: `ir.minisaeb.smartHome`.
+
+[Release notes and checksums](https://github.com/Guardian83/lumos-releases/releases/tag/ios-preview-1030). This iPhone preview is a separate manual download; the Android update feed still offers build 1027.
+
 ## iPhone installation with iLoader
 
 1. Download `smart_home_unsigned.ipa` from an approved release to your computer.
